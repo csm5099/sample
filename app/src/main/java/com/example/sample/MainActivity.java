@@ -1,42 +1,38 @@
 package com.example.sample;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView textView;
-    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.textView);
-        listView = findViewById(R.id.listView);
-    }
+        final PackageManager pm = getPackageManager();
+        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        List<ApplicationInfo> list = new ArrayList<>();
+        for (ApplicationInfo packageInfo : packages){
+            Log.d("ApplicationINfo", "Installed package : " + packageInfo.packageName);
+            Log.d("ApplicationINfo", "Source dir : " + packageInfo.sourceDir);
+            Log.d("ApplicationINfo", "Launch Activity : " + pm.getLaunchIntentForPackage(packageInfo.packageName));
 
-    public void buttonListApps(View view) {
-        List<ApplicationInfo> applicationInfoList = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA);
-        String[] stringArray = new String[applicationInfoList.size()];
-
-        int i = 0;
-        for (ApplicationInfo applicationInfo : applicationInfoList) {
-            stringArray[i] = applicationInfo.packageName;
-            i++;
+            list.add(packageInfo);
         }
-        listView.setAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, stringArray));
-        textView.setText(applicationInfoList.size() + "Apps are installed");
+
+        ((RecyclerView)findViewById(R.id.adapter)).setAdapter(new AppAdapter(pm, list));
+        ((RecyclerView)findViewById(R.id.adapter)).setHasFixedSize((true));
+        ((RecyclerView)findViewById(R.id.adapter)).setLayoutManager((new LinearLayoutManager(this)));
     }
 }
 
