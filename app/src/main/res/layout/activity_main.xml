@@ -8,13 +8,25 @@
     android:scrollbars="vertical"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/addApplication"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onAddButtonClicked"
-        android:text="add Apps"
-        tools:layout_editor_absoluteX="165dp"
-        tools:layout_editor_absoluteY="347dp" />
+        <Button
+            android:id="@+id/addApplication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onAddButtonClicked"
+            android:text="앱 추가"
+            tools:layout_editor_absoluteX="165dp"
+            tools:layout_editor_absoluteY="347dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/adapter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,20 +13,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sample.databinding.RecyclerAppItemBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ItemViewHolder>{
 
-    private List<ApplicationInfo> items;
-    private PackageManager pm;
-    public AppAdapter(PackageManager pm,List<ApplicationInfo> items){
-        this.items = items;
-        this.pm = pm;
-    }
-
-    public void clear(){
-        this.items.clear();
-    }
+//    설치된 앱의 모델 클래스 리스트 생성
+    private ArrayList<Application> mApplicationList;
+//
+//    private List<ApplicationInfo> items;
+//    private PackageManager pm;
+//    public AppAdapter(PackageManager pm,List<ApplicationInfo> items){
+//        this.items = items;
+//        this.pm = pm;
+//    }
+//
+//    public void clear(){
+//        this.items.clear();
+//    }
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
@@ -36,12 +40,12 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ItemViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position){
-        holder.onBind(items.get(position));
+        holder.onBind(mApplicationList.get(position));
     }
 
     @Override
     public int getItemCount(){
-        return items.size();
+        return mApplicationList.size();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{
@@ -52,11 +56,13 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ItemViewHolder>{
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
         }
-        void onBind(ApplicationInfo info){
-            binding.title.setText(pm.getApplicationLabel(info));
-            binding.name.setText(info.packageName);
+        void onBind(Application application){
+//            binding.title.setText(pm.getApplicationLabel(info));
+//            binding.name.setText(info.packageName);
+            binding.title.setText(application.getPackageManager().getApplicationLabel(application));
+            binding.name.setText(application.packageName);
             try{
-                binding.img.setBackground(pm.getApplicationIcon(info.packageName));
+                binding.img.setBackground(application.getPackageManager().getApplicationIcon(application.packageName));
             } catch (PackageManager.NameNotFoundException e){
               e.printStackTrace();
             }

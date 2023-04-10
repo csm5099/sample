@@ -19,6 +19,8 @@ public class ButtonActitity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_button_actitity);
 
+
+
         final PackageManager pm = getPackageManager();
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
         List<ApplicationInfo> list = new ArrayList<>();
@@ -29,8 +31,9 @@ public class ButtonActitity extends AppCompatActivity {
 
             list.add(packageInfo);
         }
+        new Application(pm, list);
 
-        ((RecyclerView)findViewById(R.id.adapter)).setAdapter(new AppAdapter(pm, list));
+        ((RecyclerView)findViewById(R.id.adapter)).setAdapter(new AppAdapter());
         ((RecyclerView)findViewById(R.id.adapter)).setHasFixedSize((true));
         ((RecyclerView)findViewById(R.id.adapter)).setLayoutManager((new LinearLayoutManager(this)));
     }
