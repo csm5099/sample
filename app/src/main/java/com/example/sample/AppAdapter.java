@@ -19,6 +19,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ItemViewHolder>{
 
     private List<ApplicationInfo> items;
     private PackageManager pm;
+
     public AppAdapter(PackageManager pm,List<ApplicationInfo> items){
         this.items = items;
         this.pm = pm;
